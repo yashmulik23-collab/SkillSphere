@@ -1,18 +1,17 @@
 # Build stage
-FROM maven:3.8.4-openjdk-17 AS build
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy the backend folder specifically
-COPY backend/pom.xml ./backend/
-RUN mvn -f backend/pom.xml dependency:go-offline
+# Copy the entire project to ensure all subfolders are present
+COPY . .
 
-COPY backend/src ./backend/src
-RUN mvn -f backend/pom.xml package -DskipTests
+# Run the build from the backend folder
+RUN mvn -f backend/pom.xml clean package -DskipTests
 
 # Run stage
 FROM eclipse-temurin:17-jre-focal
 WORKDIR /app
-# Copy the built jar from the backend target folder
+# Copy the built jar
 COPY --from=build /app/backend/target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
