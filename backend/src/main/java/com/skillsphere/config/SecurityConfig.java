@@ -76,9 +76,10 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:5173", 
-            "http://127.0.0.1:5173", 
-            "http://[::1]:5173"
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://[::1]:5173",
+            "https://ua568q8v.insforge.site"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
@@ -94,7 +95,12 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173", "http://127.0.0.1:5173", "http://[::1]:5173")
+                        .allowedOrigins(
+                            "http://localhost:5173",
+                            "http://127.0.0.1:5173",
+                            "http://[::1]:5173",
+                            "https://ua568q8v.insforge.site"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
